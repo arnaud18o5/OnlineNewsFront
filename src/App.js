@@ -1,6 +1,7 @@
 import './App.css';
 import LoginForm from './LoginForm.js';
 import RegisterForm from './RegisterForm.js';
+import UserInformations from './UserInformations.js';
 import { useCookies } from 'react-cookie';
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
     return (
       <div className="App">
         <h1>Welcome {cookies.username}</h1>
-        <button onClick={() => {removeCookies('token'); removeCookies('username')}}>Sign-out</button>
+        <button onClick={() => {removeCookies('username'); removeCookies('token'); removeCookies('description'); removeCookies('lastName'); removeCookies('firstName');}}>Sign-out</button>
+        <UserInformations></UserInformations>
       </div>
     );
   }

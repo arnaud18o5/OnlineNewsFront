@@ -34,6 +34,9 @@ const LoginForm = () => {
             console.log(`Welcome ${user.data.login.firstName}`);
             setCookies('token', user.data.login.token);
             setCookies('username', user.data.login.username);
+            setCookies('firstName', user.data.login.firstName);
+            setCookies('lastName', user.data.login.lastName);
+            setCookies('description', user.data.login.description);
         }
         console.log(user);
     }
