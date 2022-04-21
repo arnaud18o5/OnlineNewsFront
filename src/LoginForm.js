@@ -17,8 +17,6 @@ const LoginForm = () => {
           }`;
           const username = event.target.username.value;
           const password = event.target.password.value;
-          console.log(username);
-          console.log(password);
           const response = await fetch('http://localhost:4000/graphql', {
             method: 'POST',
             headers: {
@@ -37,6 +35,7 @@ const LoginForm = () => {
             setCookies('firstName', user.data.login.firstName);
             setCookies('lastName', user.data.login.lastName);
             setCookies('description', user.data.login.description);
+            setCookies('id', user.data.login.id);
         }
         console.log(user);
     }
