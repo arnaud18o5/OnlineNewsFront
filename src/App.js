@@ -6,6 +6,7 @@ import UserInformations from './UserInformations.js';
 import PostArticle from './PostArticle.js';
 import { useCookies } from 'react-cookie';
 import ListArticles from './ListArticles';
+import FileInput from './FileInput.js';
 
 const App = () => {
   const [cookies, setCookies, removeCookies] = useCookies();
@@ -26,6 +27,7 @@ const App = () => {
         <UserInformations></UserInformations>
         <PostArticle></PostArticle>
         <ListArticles></ListArticles>
+        <FileInput></FileInput>
       </div>
     );
   }
