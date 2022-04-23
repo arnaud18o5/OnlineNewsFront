@@ -1,5 +1,6 @@
 import {useCookies} from 'react-cookie';
 import {useState} from 'react';
+import FileInput from './FileInput.js';
 
 const UserInfo = (props) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -59,7 +60,8 @@ const UserInfo = (props) => {
             return (props.name === 'Avatar' ? 
                 <div class="user-info">
                     <p>Avatar : </p>
-                    <img src={"http://localhost:4000/images/"+cookies.avatar}/>
+                    <img src={cookies.avatar} width="100" height="100"/>
+                    <FileInput></FileInput>
                 </div>
             : 
                 <div class="user-info">
