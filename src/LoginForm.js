@@ -13,6 +13,7 @@ const LoginForm = () => {
               lastName
               token
               description
+              avatar
             }
           }`;
           const username = event.target.username.value;
@@ -36,6 +37,7 @@ const LoginForm = () => {
             setCookies('lastName', user.data.login.lastName);
             setCookies('description', user.data.login.description);
             setCookies('id', user.data.login.id);
+            setCookies('avatar', user.data.login.avatar);
         }
         console.log(user);
     }

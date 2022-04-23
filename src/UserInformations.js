@@ -11,6 +11,9 @@ const UserInformations = () => {
                     <UserInfo name="Username" type="username" value={cookies.username} editing={false}></UserInfo>
                 </li>
                 <li>
+                    <UserInfo name="Avatar" type="image" value={cookies.avatar} editing={true}></UserInfo>
+                </li>
+                <li>
                     <UserInfo name="First Name" type="firstName" value={cookies.firstName} editing={true}></UserInfo>
                 </li>
                 <li>

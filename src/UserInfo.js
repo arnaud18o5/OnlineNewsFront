@@ -56,7 +56,12 @@ const UserInfo = (props) => {
             )
         }
         else {
-            return (
+            return (props.name === 'Avatar' ? 
+                <div class="user-info">
+                    <p>Avatar : </p>
+                    <img src={"http://localhost:4000/images/"+cookies.avatar}/>
+                </div>
+            : 
                 <div class="user-info">
                     <p>{props.name} : {props.value}</p>
                     <button onClick={edit}>Edit</button>

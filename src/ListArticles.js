@@ -43,7 +43,14 @@ const ListArticles = () => {
     }, [])
 
     if(error) return "Failed to load articles.";
-    return (loading ? "Loading..." : <ul>{articles.data.getAllArticlesOf.map((a)=>{return <li key={a.title}>{a.title}</li>})}</ul>);
+    return (loading ? "Loading..." : 
+    <div id='listArticles'>
+        <h3>My articles :</h3>
+        <ul>
+            {articles.data.getAllArticlesOf.map((a)=>{return <li key={a.title}><a href="#">{a.title}</a></li>})}
+        </ul>
+    </div>
+    );
 }
 
 export default ListArticles;

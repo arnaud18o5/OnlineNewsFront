@@ -40,9 +40,10 @@ const PostArticle = () => {
 
     return (
         <div id="postArticle">
+            <h3>Post a new article : </h3>
             <form onSubmit={submit}>
-                <input type="text" id="articleTitle"></input>
-                <input type="text" id="articleText"></input>
+                <input type="text" id="articleTitle" placeholder="Title"></input>
+                <input type="text" id="articleText" placeholder="Content"></input>
                 <input type="submit"></input>
             </form>
         </div>
