@@ -17,17 +17,18 @@ const FileInput = () => {
 
     const [uploadFile] = useMutation(UPLOAD_FILE, {
         onCompleted: data => {
+            console.log(data.singleUpload.url);
             setData(data);
             console.log(data.singleUpload.url);
             setCookies('avatar', data.singleUpload.url);
-            updateInfo();
-            console.log(cookies.avatar);
+            updateInfo(data.singleUpload.url);
             setIsLoaded(true);
         }
     })
 
-    const updateInfo = async () =>{
+    const updateInfo = async (avatar) =>{
         console.log(cookies.avatar)
+        console.log(avatar)
         const query = `mutation Mutation($avatar: String) {
             addUserInfo(avatar: $avatar) {
                 avatar
@@ -41,12 +42,11 @@ const FileInput = () => {
             },
             body: JSON.stringify({
             query,
-            variables: JSON.parse('{  "avatar" : "' +cookies.avatar+ '"}'),
+            variables: JSON.parse('{  "avatar" : "' +avatar+ '"}'),
             })
         });
         const response = await res.json();
         if(!response.errors) {
-            console.log(cookies.avatar);
             console.log(response.data.addUserInfo['avatar']);
         }
         else{
@@ -56,12 +56,11 @@ const FileInput = () => {
 
     const handleUploadFile = async (e) => {
         const file = e.target.files[0];
-        console.log(file);
+        console.log(e.target.files[0]);
         if(!file) return
         else {
             await uploadFile({variables:{file: file}});
-            console.log(data.singleUpload.url);
-            setCookies('avatar', data.singleUpload.url);
+            console.log(data);
         }
 
     }
