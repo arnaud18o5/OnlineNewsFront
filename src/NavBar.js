@@ -1,7 +1,19 @@
 import {useCookies} from 'react-cookie';
+import ReactTooltip from 'react-tooltip';
+import LoginForm from './LoginForm.js';
+import RegisterForm from './RegisterForm.js';
 
-const NavBar = () => {
-    const [cookies, setCookie, removeCookie] = useCookies();
+const NavBar = (props) => {
+    const [cookies, setCookie, removeCookies] = useCookies();
+
+    const signOut = () => {
+        removeCookies('username'); 
+        removeCookies('token'); 
+        removeCookies('description');
+        removeCookies('lastName'); 
+        removeCookies('firstName');
+        props.changeState("HP");
+    }
     if(cookies.token){
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,7 +46,23 @@ const NavBar = () => {
                     <div class="position-relativ">
                         <div class="position-absolute top-50 end-0 translate-middle-y">
                             <div class="px-5">
-                                <button class="mx-3 btn btn-light">{cookies.username}</button>
+                                <button class="mx-3 btn btn-light" data-tip data-for="user" data-event="click">{cookies.username}</button>
+                                <ReactTooltip id='user' place='bottom' type="light" effect='solid' border={true} clickable={true}>
+                                    <div>
+                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
+                                            <button class="w-100 btn btn-link">Your profile</button>
+                                        </div>
+                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
+                                            <button class="w-100 btn btn-link">Your articles</button>
+                                        </div>
+                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
+                                            <button class="w-100 btn btn-link">Your subscriptions</button>
+                                        </div>
+                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
+                                            <button onClick={signOut} class="w-100 btn btn-light">Sign-out</button>
+                                        </div>
+                                    </div>
+                                </ReactTooltip>
                             </div> 
                         </div>
                     </div>
@@ -74,8 +102,14 @@ const NavBar = () => {
                     <div class="position-relativ">
                         <div class="position-absolute top-50 end-0 translate-middle-y">
                             <div class="px-5">
-                                <button class="mx-3 btn btn-light">Login</button>
-                                <button class="btn btn-warning">Sign-Up</button>
+                                <button  data-tip data-for="login" data-event="click" class="mx-3 btn btn-light">Login</button>
+                                <ReactTooltip id='login' place='bottom' type="light" effect='solid' border={true} clickable={true} >
+                                    <LoginForm onConnect={props.changeState}></LoginForm>
+                                </ReactTooltip>
+                                <button  data-tip data-for="register" data-event="click" class="btn btn-warning">Sign-Up</button>
+                                <ReactTooltip id='register' place='bottom' type="light" effect='solid' border={true} clickable={true} >
+                                    <RegisterForm></RegisterForm>
+                                </ReactTooltip>
                             </div> 
                         </div>
                     </div>

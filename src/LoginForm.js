@@ -1,7 +1,8 @@
 import { useCookies} from 'react-cookie';
+import Button from 'react-bootstrap/Button';
 
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const [cookies, setCookies, removeCookies] = useCookies();
     const submit = async (event) => {
         event.preventDefault();
@@ -38,6 +39,7 @@ const LoginForm = () => {
             setCookies('description', user.data.login.description);
             setCookies('id', user.data.login.id);
             setCookies('avatar', user.data.login.avatar);
+            props.onConnect("HPLogged");
         }
         console.log(user);
     }
@@ -46,9 +48,17 @@ const LoginForm = () => {
         <div id="login-div">
             <h3>Login user :</h3>
             <form onSubmit={submit}>
-                <input type="text" id="username" placeholder="username"></input>
-                <input type="password" id="password" placeholder="password"></input>
-                <input type="submit" value="connect"></input>
+                <div class="flex-column">
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <input type="text" id="username" placeholder="username"></input>
+                    </div>
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <input type="password" id="password" placeholder="password"></input>
+                    </div>
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <button type="submit" class="btn btn-primary">Connect</button>
+                    </div>
+                </div>
             </form>
         </div>
     )

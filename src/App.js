@@ -9,8 +9,10 @@ import ListArticles from './ListArticles';
 import FileInput from './FileInput.js';
 import Marked from './Marked.js';
 import NavBar from './NavBar.js';
+import LastArticles from './LastArticles.js';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
+import {useState, useEffect} from 'react';
 
 const client = new ApolloClient({
   link: createUploadLink({
@@ -22,14 +24,24 @@ const client = new ApolloClient({
 
 const App = () => {
   const [cookies, setCookies, removeCookies] = useCookies();
+  const [state, setState] = useState("Start");
 
-  if(!cookies.token){
+  useEffect(() => {
+    if(cookies.token){
+      setState("HPLogged");
+    }
+    else{
+      setState("HP");
+    }
+  }, [])
+  
+
+  if(state === "HP"){
+
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <NavBar></NavBar>
-          <LoginForm></LoginForm>
-          <RegisterForm></RegisterForm>
+          <NavBar changeState={setState}></NavBar>
         </div>
       </ApolloProvider>
     );
@@ -39,12 +51,12 @@ const App = () => {
     return (
       <ApolloProvider client={client}>
       <div className="App">
-        <NavBar></NavBar>
+        <NavBar changeState={setState}></NavBar>
+        <LastArticles></LastArticles>
         <h1>Welcome {cookies.username}</h1>
         <button class="btn btn-primary"onClick={() => {removeCookies('username'); removeCookies('token'); removeCookies('description'); removeCookies('lastName'); removeCookies('firstName');}}>Sign-out</button>
         <UserInformations></UserInformations>
         <PostArticle></PostArticle>
-        <ListArticles></ListArticles>
         <FileInput></FileInput>
         <Marked></Marked>
       </div>

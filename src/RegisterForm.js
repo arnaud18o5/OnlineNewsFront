@@ -34,14 +34,24 @@ const RegisterForm = () => {
     }
 
     return (
+    <>
         <div id="register-div">
             <h3>Register user :</h3>
             <form onSubmit={submit}>
-                <input type="text" id="usernameregister" placeholder="username"></input>
-                <input type="password" id="passwordregister" placeholder="password"></input>
-                <input type="submit" value="register"></input>
+                <div class="flex-column">
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <input type="text" id="username" placeholder="username"></input>
+                    </div>
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <input type="password" id="password" placeholder="password"></input>
+                    </div>
+                    <div class="form-floating d-flex justify-content-center input-group mb-3">
+                        <button type="submit" class="btn btn-primary">Connect</button>
+                    </div>
+                </div>
             </form>
         </div>
+      </>
     )
 }
 
