@@ -33,7 +33,7 @@ const Marked = () => {
     // Run marked
     return(
         <>
-        <div id="markedElement" dangerouslySetInnerHTML={returnHTMLElement('# Marked in the browser\n\nRendered by **marked**.\n[Google](https://www.google.fi/)')}>
+        <div id="markedElement" dangerouslySetInnerHTML={returnHTMLElement('# Marked in the browser\n\nRendered by **marked**.\n[Google](https://www.google.fi/) \n ![Tux, the Linux mascot](http://localhost:4000/images/7mT8YrB0k3sg.jpeg)')}>
 
         </div>
         </>
