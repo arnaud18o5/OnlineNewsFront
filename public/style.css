@@ -30,3 +30,7 @@
   .z-devant {
       z-index:100;
   }
+
+  .padding{
+    padding: 5px;
+  }

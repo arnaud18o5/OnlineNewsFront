@@ -24,6 +24,7 @@ const client = new ApolloClient({
 const App = () => {
   const [cookies, setCookies, removeCookies] = useCookies();
   const [state, setState] = useState("Start");
+  const [article, setArticle] = useState('');
 
   useEffect(() => {
     if(cookies.token){
@@ -45,23 +46,35 @@ const App = () => {
       </ApolloProvider>
     );
   }
-  else {
+  if(state === "newArticle" && article !== null){
     console.log("token");
     return (
       <ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState}></NavBar>
-        <ListArticles request="getBestArticles" name="Best Articles"></ListArticles>
-        <ListArticles request="getLastArticles" name="Latest Articles"></ListArticles>
-        <h1>Welcome {cookies.username}</h1>
-        <button class="btn btn-primary"onClick={() => {removeCookies('username'); removeCookies('token'); removeCookies('description'); removeCookies('lastName'); removeCookies('firstName');}}>Sign-out</button>
-        <UserInformations></UserInformations>
-        <PostArticle></PostArticle>
-        <FileInput></FileInput>
-        <Marked></Marked>
+        <PostArticle changeState={setState} article={setArticle}></PostArticle>
       </div>
       </ApolloProvider>
     );
+  }
+  if(state==="HPLogged"){
+    return(<ApolloProvider client={client}>
+      <div className="App">
+        <NavBar changeState={setState}></NavBar>
+        <ListArticles request="getBestArticles" name="Best Articles"></ListArticles>
+        <ListArticles request="getLastArticles" name="Latest Articles"></ListArticles>
+      </div>
+      </ApolloProvider>)
+  }
+  if(state==="errorPostArticle"){
+    return (
+      <div>
+          <div class="alert alert-danger" role="alert">
+              Problem with posting the article. Try Again.
+          </div>
+          <button class="btn btn-primary" onClick={setState("newArticle")}>Go back to article creation</button>
+      </div>
+  )
   }
 }
 

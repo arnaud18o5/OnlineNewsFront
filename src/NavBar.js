@@ -18,7 +18,7 @@ const NavBar = (props) => {
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light z-devant">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Online News</a>
+                    <a class="navbar-brand" href="#" onClick={() => {props.changeState("HPLogged")}}>Online News</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
@@ -44,7 +44,8 @@ const NavBar = (props) => {
                 </div>
                 <div class="container-fluid">
                     <div class="position-relativ">
-                        <div class="position-absolute top-50 end-0 translate-middle-y">
+                        <div class="position-absolute top-50 end-0 translate-middle-y d-flex align-items-center">
+                        <button class="btn btn-warning" onClick={()=> {props.changeState("newArticle")}}>New Article</button>
                             <div class="px-5 dropdown z-drop">
                                 <button class="mx-3 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{cookies.username}</button>
                                     <div class="dropdown-menu z-drop" aria-labelledby="user">

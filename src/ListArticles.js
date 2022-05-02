@@ -95,7 +95,7 @@ const LastArticles = (props) => {
             {articles.data[props.request].map((a)=>{
                 return (
                     <li key={a.title} class="list-inline-item media-element card z-card">
-                            <img class="z-card" src={a.headPicture} class="card-img-top" alt="..."></img>
+                            <img class="z-card" src={"https://onlinenews.azurewebsites.net/images/"+a.headPicture} class="card-img-top" alt="..."></img>
                             <div class="card-body z-card" >
                               <p>{a.date}</p>
                                 <h5 class="card-title z-card">{a.title}</h5>
