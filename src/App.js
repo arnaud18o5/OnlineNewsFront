@@ -9,14 +9,13 @@ import ListArticles from './ListArticles';
 import FileInput from './FileInput.js';
 import Marked from './Marked.js';
 import NavBar from './NavBar.js';
-import LastArticles from './LastArticles.js';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 import {useState, useEffect} from 'react';
 
 const client = new ApolloClient({
   link: createUploadLink({
-    uri:'http://localhost:4000/graphql'
+    uri:'https://onlinenews.azurewebsites.net/graphql'
   }),
   cache: new InMemoryCache(),
 })
@@ -52,7 +51,8 @@ const App = () => {
       <ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState}></NavBar>
-        <LastArticles></LastArticles>
+        <ListArticles request="getBestArticles" name="Best Articles"></ListArticles>
+        <ListArticles request="getLastArticles" name="Latest Articles"></ListArticles>
         <h1>Welcome {cookies.username}</h1>
         <button class="btn btn-primary"onClick={() => {removeCookies('username'); removeCookies('token'); removeCookies('description'); removeCookies('lastName'); removeCookies('firstName');}}>Sign-out</button>
         <UserInformations></UserInformations>

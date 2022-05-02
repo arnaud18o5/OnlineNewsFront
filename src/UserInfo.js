@@ -19,7 +19,7 @@ const UserInfo = (props) => {
                 ${props.type}
             }
           }`;
-          const res = await fetch('http://localhost:4000/graphql', {
+          const res = await fetch('https://onlinenews.azurewebsites.net/graphql', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

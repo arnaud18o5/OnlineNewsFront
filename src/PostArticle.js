@@ -18,7 +18,7 @@ const PostArticle = () => {
           }`;
           const title = event.target.articleTitle.value;
           const text = event.target.articleText.value;
-          const response = await fetch('http://localhost:4000/graphql', {
+          const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

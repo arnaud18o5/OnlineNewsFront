@@ -5,6 +5,7 @@ const RegisterForm = () => {
 
     const submit = async (event) => {
         event.preventDefault();
+        console.log("submit registration");
         const query = `mutation RegisterUser($username: String!, $password: String!) {
             registerUser(username: $username, password: $password) {
               firstName
@@ -14,9 +15,9 @@ const RegisterForm = () => {
               id
             }
           }`;
-          const username = event.target.usernameregister.value;
-          const password = event.target.passwordregister.value;
-          const response = await fetch('http://localhost:4000/graphql', {
+          const username = event.target.username.value;
+          const password = event.target.password.value;
+          const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

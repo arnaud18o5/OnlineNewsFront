@@ -16,7 +16,7 @@ const NavBar = (props) => {
     }
     if(cookies.token){
         return(
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light z-devant">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Online News</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,9 @@ const NavBar = (props) => {
                 <div class="container-fluid">
                     <div class="position-relativ">
                         <div class="position-absolute top-50 end-0 translate-middle-y">
-                            <div class="px-5">
-                                <button class="mx-3 btn btn-light" data-tip data-for="user" data-event="click">{cookies.username}</button>
-                                <ReactTooltip id='user' place='bottom' type="light" effect='solid' border={true} clickable={true}>
-                                    <div>
+                            <div class="px-5 dropdown z-drop">
+                                <button class="mx-3 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{cookies.username}</button>
+                                    <div class="dropdown-menu z-drop" aria-labelledby="user">
                                         <div class="d-flex p-2 bd-highlight w-100 px-0">
                                             <button class="w-100 btn btn-link">Your profile</button>
                                         </div>
@@ -62,7 +61,6 @@ const NavBar = (props) => {
                                             <button onClick={signOut} class="w-100 btn btn-light">Sign-out</button>
                                         </div>
                                     </div>
-                                </ReactTooltip>
                             </div> 
                         </div>
                     </div>

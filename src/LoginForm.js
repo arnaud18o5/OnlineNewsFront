@@ -19,7 +19,7 @@ const LoginForm = (props) => {
           }`;
           const username = event.target.username.value;
           const password = event.target.password.value;
-          const response = await fetch('http://localhost:4000/graphql', {
+          const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -31,6 +31,7 @@ const LoginForm = (props) => {
         });
         const user = await response.json();
         if(!user.errors) {
+            console.log(user);
             console.log(`Welcome ${user.data.login.firstName}`);
             setCookies('token', user.data.login.token);
             setCookies('username', user.data.login.username);
