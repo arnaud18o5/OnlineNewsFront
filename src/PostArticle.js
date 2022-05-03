@@ -2,7 +2,6 @@ import {useCookies} from 'react-cookie';
 import {useState, useEffect} from 'react';
 import FileInput from './FileInput.js';
 import MDEditor from '@uiw/react-md-editor';
-import listPictureContent from './ListPictureContent.js';
 import ListPictureContent from './ListPictureContent.js';
 import HeadPicture from './HeadPicture.js';
 
@@ -89,12 +88,6 @@ const PostArticle = (props) => {
               title
               text
               date
-              comments {
-                id
-                author
-                text
-                date
-              }
               likes {
                 usr {
                   _id

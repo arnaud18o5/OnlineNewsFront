@@ -36,7 +36,10 @@ const LastArticles = (props) => {
                   date
                   comments {
                     id
-                    author
+                    author {
+                      id
+                      username
+                    }
                     text
                     date
                   }
@@ -106,7 +109,10 @@ const LastArticles = (props) => {
                 date
                 comments {
                   id
-                  author
+                  author{
+                    id
+                    username
+                  }
                   text
                   date
                 }
@@ -161,6 +167,7 @@ const LastArticles = (props) => {
         f();
     }, [])
 
+    console.log(articles);
     if(error) return "Failed to load articles.";
     return (loading ?  
     <div>
@@ -181,7 +188,7 @@ const LastArticles = (props) => {
                               <p>{a.date}</p>
                                 <h5 class="card-title z-card">{a.title}</h5>
                                 {a.topics.map((topic) => {
-                                  console.log(topic.name);
+                                  return topic.name;
                                 })}
                                 <div class="inline z-card">
                                   <a href="#" class="">{a.author.username}</a>
@@ -190,7 +197,7 @@ const LastArticles = (props) => {
                                 <div class="progress-bar bg-success z-card" role="progressbar" style={{width: (parseInt(a.likeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()+"%"}} aria-valuenow={(parseInt(a.likeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()} aria-valuemin="0" aria-valuemax="100">{a.likeCounter} {a.likeCounter > 1 ? "likes" : "like"}</div>
                                 <div class="progress-bar bg-danger z-card" role="progressbar" style={{width: (parseInt(a.dislikeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()+"%"}} aria-valuenow={(parseInt(a.dislikeCounter)*100/(parseInt(a.likeCounter+a.dislikeCounter))).toString()} aria-valuemin="0" aria-valuemax="100">{a.dislikeCounter} {a.dislikeCounter > 1 ? "dislikes" : "dislike"}</div>
                               </div>
-                              <a href="#" onClick={() => props.changeState(a.id)}class="stretched-link">Go to the article</a>
+                              <a href="#" onClick={() => {props.changeState(a.id);}}class="stretched-link">Go to the article</a>
                             </div>
                   </li>
                 )})}

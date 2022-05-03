@@ -1,10 +1,61 @@
 import {useState, useEffect} from 'react';
 import MDEditor from '@uiw/react-md-editor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+import {useCookies} from 'react-cookie'
+import Comments from './Comments.js';
 
 const Article = (props) => {
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [cookies, setCookies] = useCookies();
+  const [likeCount, setLikeCount] = useState({like:0, dislike:0});
+
+  const likeArticle = async (like) => {
+    try {
+      let query;
+      if(like){
+        query = `mutation Mutation($articleId: ID!) {
+          like(articleID: $articleId) {
+            likeCounter
+            dislikeCounter
+          }
+        }`;
+      }
+      else {
+        query = `mutation Mutation($articleId: ID!) {
+          dislike(articleID: $articleId) {
+            likeCounter
+            dislikeCounter
+          }
+        }`
+      }
+      const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookies.token}`
+        },
+        body: JSON.stringify({
+        query,
+        variables: { articleId: props.articleId },
+        })
+      });
+      const newArticle = await response.json();
+      console.log(newArticle.data);
+      if(like === true){
+        setLikeCount({like:newArticle.data.like.likeCounter, dislike: newArticle.data.like.dislikeCounter});
+      }
+      else{
+        setLikeCount({like:newArticle.data.dislike.likeCounter, dislike: newArticle.data.dislike.dislikeCounter});
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    } finally {
+    }
+  }
 
   const getArticle = async () => {
     console.log("loading article");
@@ -35,7 +86,10 @@ const Article = (props) => {
           date
           comments {
             id
-            author
+            author{
+              username
+              id
+            }
             text
             date
           }
@@ -51,8 +105,8 @@ const Article = (props) => {
           likeCounter
           dislikes {
             usr {
-              username
               _id
+              username
               firstName
               lastName
               avatar
@@ -75,10 +129,13 @@ const Article = (props) => {
         variables: { articleId: props.articleId },
         })
       });
-
-      const article = await response.json();
-      setArticle(article.data.getArticleById);
+      console.log(response);
+      const Article = await response.json();
+      console.log(Article)
+      setArticle(Article.data.getArticleById);
+      setLikeCount({like:Article.data.getArticleById.likeCounter, dislike: Article.data.getArticleById.dislikeCounter});
     } catch(error){
+      console.log(error);
       setError(error);
     }
     finally {
@@ -90,6 +147,7 @@ const Article = (props) => {
     getArticle();
   }, []);
 
+
   if(isLoading){
     return (
       <div>
@@ -100,35 +158,46 @@ const Article = (props) => {
       </div>
     )
   }
-  else if(error){
+  if(error){
     return (
       <p>Error with loading article</p>
+      )
+    }
+    console.log(article);
+    return (
+      <div id="back-Article">
+        <div class="Article">
+          <h1>{article.title}</h1>
+          <h4>{article.date}</h4>
+          <ul>
+            {article.topics.map((topic) => {
+              console.log(topic.name);
+              return <li key={topic.name}>{topic.name}</li>
+            })}
+          </ul>
+          <img src={"https://onlinenews.azurewebsites.net/images/"+article.headPicture} style={{margin: "auto"}}></img>
+          <MDEditor.Markdown 
+            source={article.text} 
+            style={{margin: "5% 0 0 0"}}
+          />
+        </div>
+        <div class="Article"id="likeButtons">
+            <button class="btn btn-success" onClick={() => likeArticle(true)}><FontAwesomeIcon icon={faThumbsUp} /></button>
+            <button class="btn btn-warning" onClick={() => likeArticle(false)}><FontAwesomeIcon icon={faThumbsDown} /></button>
+            <div class="progress" style={{width:"30%"}}>
+              <div class="progress-bar bg-success " role="progressbar" style={{width: (parseInt(likeCount.like)*100/(parseInt(likeCount.like)+parseInt(likeCount.dislike))).toString()+"%"}} aria-valuenow={(parseInt(likeCount.like)*100/(parseInt(likeCount.like)+parseInt(likeCount.dislike))).toString()} aria-valuemin="0" aria-valuemax="100">{likeCount.like} {likeCount.like > 1 ? "likes" : "like"}</div>
+              <div class="progress-bar bg-danger " role="progressbar" style={{width: (parseInt(likeCount.dislike)*100/(parseInt(likeCount.like)+parseInt(likeCount.dislike))).toString()+"%"}} aria-valuenow={(parseInt(likeCount.dislike)*100/(parseInt(likeCount.like+likeCount.dislike))).toString()} aria-valuemin="0" aria-valuemax="100">{likeCount.dislike} {likeCount.dislike > 1 ? "dislikes" : "dislike"}</div>
+            </div>
+        </div>
+        <Comments comments={article.comments} articleId={props.articleId}></Comments>
+        <div class="author-div Article">
+          <img src={article.author.avatar}></img>
+          <p>{article.author.username}</p>
+        </div>
+      </div>
     )
-  }
-  console.log(article);
-  return (
-    <div id="back-Article">
-      <div class="Article">
-        <h1>{article.title}</h1>
-        <h4>{article.date}</h4>
-        <ul>
-          {article.topics.map((topic) => {
-            console.log(topic.name);
-            return <li key={topic.name}>{topic.name}</li>
-          })}
-        </ul>
-        <img src={"https://onlinenews.azurewebsites.net/images/"+article.headPicture} style={{margin: "auto"}}></img>
-        <MDEditor.Markdown 
-          source={article.text} 
-          style={{margin: "5% 0 0 0"}}
-        />
-      </div>
-      <div class="author-div Article">
-        <img src={article.author.avatar}></img>
-        <p>{article.author.username}</p>
-      </div>
-    </div>
-  )
+  
+    
 }
 
 export default Article;
