@@ -63,6 +63,11 @@ const App = () => {
         <NavBar changeState={setState}></NavBar>
         <ListArticles request="getBestArticles" name="Best Articles"></ListArticles>
         <ListArticles request="getLastArticles" name="Latest Articles"></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy"></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="626d1f2ec2510481ec06b498" name="Politic"></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271078f64de2a3179c4356c" name="Environment"></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271078364de2a3179c43567" name="Sport"></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271077864de2a3179c43562" name="Society"></ListArticles>
       </div>
       </ApolloProvider>)
   }

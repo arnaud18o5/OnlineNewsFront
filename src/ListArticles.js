@@ -8,61 +8,63 @@ const LastArticles = (props) => {
 
     const f = async () => {
         try{
+          if(!props.topic)
+          {
             const query = `query Query($number: Int) {
                 ${props.request}(number: $number) {
                   id
-    author {
-      id
-      username
-      token
-      firstName
-      lastName
-      description
-      avatar
-      subscribers {
-        id
-        username
-      }
-      subscribingTo {
-        id
-        username
-      }
-    }
-    headPicture
-    title
-    text
-    date
-    comments {
-      id
-      author
-      text
-      date
-    }
-    likes {
-      usr {
-        _id
-        username
-        firstName
-        lastName
-        avatar
-      }
-    }
-    likeCounter
-    dislikes{
-        usr {
-        _id
-        username
-        firstName
-        lastName
-        avatar
-      }
-    }
-    dislikeCounter
-    topics {
-      id
-      name
-    }
-  }
+                  author {
+                    id
+                    username
+                    token
+                    firstName
+                    lastName
+                    description
+                    avatar
+                    subscribers {
+                      id
+                      username
+                    }
+                    subscribingTo {
+                      id
+                      username
+                    }
+                  }
+                  headPicture
+                  title
+                  text
+                  date
+                  comments {
+                    id
+                    author
+                    text
+                    date
+                  }
+                  likes {
+                    usr {
+                      _id
+                      username
+                      firstName
+                      lastName
+                      avatar
+                    }
+                  }
+                  likeCounter
+                  dislikes{
+                      usr {
+                      _id
+                      username
+                      firstName
+                      lastName
+                      avatar
+                    }
+                  }
+                  dislikeCounter
+                  topics {
+                    id
+                    name
+                  }
+                }
               }`;
             const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
                 method: 'POST',
@@ -76,6 +78,78 @@ const LastArticles = (props) => {
             });
             const articles = await response.json();
             setArticles(articles);
+          }
+          else{
+            const query = `query Query($topicId: ID!) {
+              getArticleByTopic(topicID: $topicId) {
+                id
+                author {
+                  id
+                  username
+                  token
+                  firstName
+                  lastName
+                  description
+                  avatar
+                  subscribers {
+                    id
+                    username
+                  }
+                  subscribingTo {
+                    id
+                    username
+                  }
+                }
+                headPicture
+                title
+                text
+                date
+                comments {
+                  id
+                  author
+                  text
+                  date
+                }
+                likes {
+                  usr {
+                    _id
+                    username
+                    firstName
+                    lastName
+                    avatar
+                  }
+                }
+                likeCounter
+                dislikes{
+                    usr {
+                    _id
+                    username
+                    firstName
+                    lastName
+                    avatar
+                  }
+                }
+                dislikeCounter
+                topics {
+                  id
+                  name
+                }
+              }
+            }`;
+          const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+              method: 'POST',
+              headers: {
+              'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+              query,
+              variables: { topicId: props.topic },
+              })
+          });
+          const articles = await response.json();
+            setArticles(articles);
+          }
+            
         } catch (e){
             setError(e);
         } finally {
@@ -88,7 +162,14 @@ const LastArticles = (props) => {
     }, [])
 
     if(error) return "Failed to load articles.";
-    return (loading ? "Loading..." : 
+    return (loading ?  
+    <div>
+      <h3 style={{padding: "10px 0 10px 20px"}}>{props.name}:</h3>
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    : 
     <div id='listArticles'>
         <h3 style={{padding: "10px 0 10px 20px"}}>{props.name}:</h3>
         <ul class="list-inline media-scroller snaps-inline z-card">
