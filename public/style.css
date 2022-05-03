@@ -1,6 +1,10 @@
 @import "https://unpkg.com/open-props";
 @import "https://unpkg.com/open-props/normalize.min.css";
 
+body {
+  background-color: #959595;
+}
+
 .media-scroller {
     --_spacer: var(--size-3);
     display: grid;
@@ -33,4 +37,20 @@
 
   .padding{
     padding: 5px;
+  }
+
+  .Article{
+    margin: auto;
+    padding: 5%;
+    width: 80%;
+    background-color: #FFFFFF;
+  }
+
+
+  #back-Article{
+    background-color: #959595;
+  }
+
+  .author-div{
+    background-color: aqua;
   }

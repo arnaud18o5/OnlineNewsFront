@@ -7,7 +7,7 @@ import PostArticle from './PostArticle.js';
 import { useCookies } from 'react-cookie';
 import ListArticles from './ListArticles';
 import FileInput from './FileInput.js';
-import Marked from './Marked.js';
+import Article from './Article.js';
 import NavBar from './NavBar.js';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
@@ -61,13 +61,13 @@ const App = () => {
     return(<ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState}></NavBar>
-        <ListArticles request="getBestArticles" name="Best Articles"></ListArticles>
-        <ListArticles request="getLastArticles" name="Latest Articles"></ListArticles>
-        <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy"></ListArticles>
-        <ListArticles request="getArticleByTopic" topic="626d1f2ec2510481ec06b498" name="Politic"></ListArticles>
-        <ListArticles request="getArticleByTopic" topic="6271078f64de2a3179c4356c" name="Environment"></ListArticles>
-        <ListArticles request="getArticleByTopic" topic="6271078364de2a3179c43567" name="Sport"></ListArticles>
-        <ListArticles request="getArticleByTopic" topic="6271077864de2a3179c43562" name="Society"></ListArticles>
+        <ListArticles request="getBestArticles" name="Best Articles" changeState={setState}></ListArticles>
+        <ListArticles request="getLastArticles" name="Latest Articles" changeState={setState}></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy" changeState={setState}></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="626d1f2ec2510481ec06b498" name="Politic" changeState={setState}></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271078f64de2a3179c4356c" name="Environment" changeState={setState}></ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271078364de2a3179c43567" name="Sport" changeState={setState}>Ò</ListArticles>
+        <ListArticles request="getArticleByTopic" topic="6271077864de2a3179c43562" name="Society" changeState={setState}></ListArticles>
       </div>
       </ApolloProvider>)
   }
@@ -80,6 +80,16 @@ const App = () => {
           <button class="btn btn-primary" onClick={setState("newArticle")}>Go back to article creation</button>
       </div>
   )
+  }
+  else {
+    return (
+      <ApolloProvider client={client}>
+      <div className="App">
+      <NavBar changeState={setState}></NavBar>
+      <Article articleId={state}></Article>
+      </div>
+      </ApolloProvider>
+    )
   }
 }
 

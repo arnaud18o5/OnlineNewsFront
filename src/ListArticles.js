@@ -186,10 +186,11 @@ const LastArticles = (props) => {
                                 <div class="inline z-card">
                                   <a href="#" class="">{a.author.username}</a>
                                 </div>
-                                <div class="progress z-card">
+                              <div class="progress z-card">
                                 <div class="progress-bar bg-success z-card" role="progressbar" style={{width: (parseInt(a.likeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()+"%"}} aria-valuenow={(parseInt(a.likeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()} aria-valuemin="0" aria-valuemax="100">{a.likeCounter} {a.likeCounter > 1 ? "likes" : "like"}</div>
                                 <div class="progress-bar bg-danger z-card" role="progressbar" style={{width: (parseInt(a.dislikeCounter)*100/(parseInt(a.likeCounter)+parseInt(a.dislikeCounter))).toString()+"%"}} aria-valuenow={(parseInt(a.dislikeCounter)*100/(parseInt(a.likeCounter+a.dislikeCounter))).toString()} aria-valuemin="0" aria-valuemax="100">{a.dislikeCounter} {a.dislikeCounter > 1 ? "dislikes" : "dislike"}</div>
                               </div>
+                              <a href="#" onClick={() => props.changeState(a.id)}class="stretched-link">Go to the article</a>
                             </div>
                   </li>
                 )})}
