@@ -49,12 +49,48 @@ const Comments = (props) => {
         }
     }
 
+    const removeComment = async (id) => {
+        setLoading(true);
+        try {
+            const query = `mutation Mutation($articleId: ID!, $commentId: ID!) {
+                removeComment(articleID: $articleId, commentID: $commentId) {
+                  id
+                  comments {
+                    id
+                    text
+                    author{
+                        username
+                    }
+                  }
+                }
+              }`;
+            const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookies.token}`
+                },
+                body: JSON.stringify({
+                query,
+                variables: { articleId:props.articleId ,commentId: id },
+                })
+            });
+            const newComments = await response.json();
+            setComments(newComments.data.removeComment.comments);
+        } catch (error) {
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    }
+
     if(loading)
         return (
             <div class="comments Article">
+                <h3>Comments :</h3>
             <ul>
             {comments.slice(0).reverse().map((comment) => {
-                return <li key={comment._id}>
+                return <li key={comment.id}>
                     <a href="#" >{comment.author.username}</a>
                      : {comment.text}
                 </li>
@@ -73,11 +109,13 @@ const Comments = (props) => {
     console.log(comments);
     return (
         <div class="comments Article">
+                <h3>Comments :</h3>
             <ul>
             {comments.slice(0).reverse().map((comment) => {
                 return <li key={comment._id}>
                     <a href="#" >{comment.author.username}</a>
                      : {comment.text}
+                    {comment.author.username === cookies.username ? <button class="btn btn-danger btn-sm ms-2" onClick={() => {removeComment(comment.id)}}>X</button> : <></>}
                 </li>
             })}
             </ul>
