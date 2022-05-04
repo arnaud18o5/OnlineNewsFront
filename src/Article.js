@@ -43,7 +43,7 @@ const Article = (props) => {
         })
       });
       const newArticle = await response.json();
-      console.log(newArticle.data);
+      //console.log(newArticle.data);
       if(like === true){
         setLikeCount({like:newArticle.data.like.likeCounter, dislike: newArticle.data.like.dislikeCounter});
       }
@@ -51,14 +51,14 @@ const Article = (props) => {
         setLikeCount({like:newArticle.data.dislike.likeCounter, dislike: newArticle.data.dislike.dislikeCounter});
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       setError(error);
     } finally {
     }
   }
 
   const getArticle = async () => {
-    console.log("loading article");
+    //console.log("loading article");
     try{
       const query = `query Query($articleId: ID!) {
         getArticleById(articleID: $articleId) {
@@ -129,13 +129,13 @@ const Article = (props) => {
         variables: { articleId: props.articleId },
         })
       });
-      console.log(response);
+      //console.log(response);
       const Article = await response.json();
-      console.log(Article)
+      //console.log(Article)
       setArticle(Article.data.getArticleById);
       setLikeCount({like:Article.data.getArticleById.likeCounter, dislike: Article.data.getArticleById.dislikeCounter});
     } catch(error){
-      console.log(error);
+      //console.log(error);
       setError(error);
     }
     finally {
@@ -163,7 +163,7 @@ const Article = (props) => {
       <p>Error with loading article</p>
       )
     }
-    console.log(article);
+    //console.log(article);
     return (
       <div id="back-Article">
         <div class="Article">
@@ -171,7 +171,7 @@ const Article = (props) => {
           <h4>{article.date}</h4>
           <ul>
             {article.topics.map((topic) => {
-              console.log(topic.name);
+              //console.log(topic.name);
               return <li key={topic.name}>{topic.name}</li>
             })}
           </ul>
@@ -189,7 +189,7 @@ const Article = (props) => {
               <div class="progress-bar bg-danger " role="progressbar" style={{width: (parseInt(likeCount.dislike)*100/(parseInt(likeCount.like)+parseInt(likeCount.dislike))).toString()+"%"}} aria-valuenow={(parseInt(likeCount.dislike)*100/(parseInt(likeCount.like+likeCount.dislike))).toString()} aria-valuemin="0" aria-valuemax="100">{likeCount.dislike} {likeCount.dislike > 1 ? "dislikes" : "dislike"}</div>
             </div>
         </div>
-        <Comments comments={article.comments} articleId={props.articleId}></Comments>
+        <Comments comments={article.comments} articleId={props.articleId} setState={props.setState} setLink={props.setLink}></Comments>
         <div class="author-div Article">
           <img src={article.author.avatar}></img>
           <p>{article.author.username}</p>

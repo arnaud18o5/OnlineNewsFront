@@ -6,9 +6,9 @@ const ListPictureContent = (props) => {
     const [pictures, setPictures] = useState([{}]);
     
     useEffect(()=> {
-        console.log(props.pictures);
+        //console.log(props.pictures);
         setPictures(props.pictures);
-        console.log(props.pictures);
+        //console.log(props.pictures);
     },[])
 
     const copyText= (e) => {
@@ -22,7 +22,7 @@ const ListPictureContent = (props) => {
             <div id='ListPictureContent'>
                 <ul class="align-self-stretch list-inline">
                     {pictures.map((picture) => {
-                        console.log(picture);
+                        //console.log(picture);
                         return (
                         <li key={pictures.url} class="list-inline-item mh-100">
                             <img src={"https://onlinenews.azurewebsites.net/images/"+picture} alt="" style={{width: '200px'}}/>

@@ -167,7 +167,7 @@ const LastArticles = (props) => {
         f();
     }, [])
 
-    console.log(articles);
+    //console.log(articles);
     if(error) return "Failed to load articles.";
     return (loading ?  
     <div>

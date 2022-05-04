@@ -20,7 +20,7 @@ const FileInput = (props) => {
             setData(data);
             if(props.type === "content"){
                 const newArray = [...props.source, data.singleUpload.url];
-                console.log([...props.source, data.singleUpload.url]);
+                //console.log([...props.source, data.singleUpload.url]);
                 props.setP(newArray);
                 props.setCounter(props.counter+1);
             }
@@ -32,13 +32,13 @@ const FileInput = (props) => {
                 props.change({name:"avatar", value: data.singleUpload.url})
             }
             setIsLoaded(true);
-            console.log(data);
+            //console.log(data);
         }
     })
 
     const updateInfo = async (avatar) =>{
-        console.log(cookies.avatar)
-        console.log(avatar)
+        //console.log(cookies.avatar)
+        //console.log(avatar)
         try {
             const query = `mutation Mutation($avatar: String) {
                 addUserInfo(avatar: $avatar) {
@@ -58,13 +58,13 @@ const FileInput = (props) => {
             });
             const response = await res.json();
             setData(response);
-            console.log(response.data.singleUpload.url);
+            //console.log(response.data.singleUpload.url);
             props.setHP(response.data.singleUpload.url);
             if(!response.errors) {
-                console.log(response.data.addUserInfo['avatar']);
+                //console.log(response.data.addUserInfo['avatar']);
             }
             else{
-                console.log("add notification error");
+                //console.log("add notification error");
             }
         } catch (e) {
             return 'error';
@@ -79,7 +79,7 @@ const FileInput = (props) => {
 
     const handleUploadFile = async (e) => {
         const file = e.target.files[0];
-        console.log(e.target.files[0]);
+        //console.log(e.target.files[0]);
         if(!file) return
         else {
             await uploadFile({variables:{file: file}});

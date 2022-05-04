@@ -34,15 +34,15 @@ const UserInfo = (props) => {
                 })
             });
             const response = await res.json();
-            console.log(response);
+            //console.log(response);
             setCookies(props.type, response.data.addUserInfo[props.type]);
             setInfo({name: props.type, value: response.data.addUserInfo[props.type]})
             //let p = profile;
             //p[props.type] = response.data.addUserInfo[props.type];
-            console.log(props.type);
+            //console.log(props.type);
             //setProfile(p);
         } catch (error) {
-            console.log("error");
+            //console.log("error");
             setError(error);
         }
         finally {

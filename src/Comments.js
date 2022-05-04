@@ -9,7 +9,7 @@ const Comments = (props) => {
 
     useEffect(() => {
         setComments(props.comments);
-        console.log(comments);
+        //console.log(comments);
     }, []);
     
     const submitComment = async (event) => {
@@ -21,6 +21,7 @@ const Comments = (props) => {
                   comments{
                       id
                       author{
+                          id
                           username
                       }
                       text
@@ -39,7 +40,7 @@ const Comments = (props) => {
                 })
               });
             const newComments = await response.json();
-            console.log(newComments);
+            //console.log(newComments);
             setComments(newComments.data.postComment.comments);
         } catch (error) {
             throw error;
@@ -106,14 +107,14 @@ const Comments = (props) => {
         </div>
         );
     
-    console.log(comments);
+    //console.log(comments);
     return (
         <div class="comments Article">
                 <h3>Comments :</h3>
             <ul>
             {comments.slice(0).reverse().map((comment) => {
                 return <li key={comment._id}>
-                    <a href="#" >{comment.author.username}</a>
+                    <a href="#" onClick={() => {props.setState("profile"); props.setLink(comment.author.id)}}>{comment.author.username}</a>
                      : {comment.text}
                     {comment.author.username === cookies.username ? <button class="btn btn-danger btn-sm ms-2" onClick={() => {removeComment(comment.id)}}>X</button> : <></>}
                 </li>

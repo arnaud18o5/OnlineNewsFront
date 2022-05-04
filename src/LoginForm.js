@@ -31,8 +31,8 @@ const LoginForm = (props) => {
         });
         const user = await response.json();
         if(!user.errors) {
-            console.log(user);
-            console.log(`Welcome ${user.data.login.firstName}`);
+            //console.log(user);
+            //console.log(`Welcome ${user.data.login.firstName}`);
             setCookies('token', user.data.login.token);
             setCookies('username', user.data.login.username);
             setCookies('firstName', user.data.login.firstName);
@@ -42,7 +42,7 @@ const LoginForm = (props) => {
             setCookies('avatar', user.data.login.avatar);
             props.onConnect("HPLogged");
         }
-        console.log(user);
+        //console.log(user);
     }
 
     return(

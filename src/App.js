@@ -28,7 +28,7 @@ const App = () => {
   const [link, setLink] = useState(localStorage.getItem('link'));
 
   const selectArticle = (id) => {
-    console.log(id);
+    //console.log(id);
     setLink(id);
     setState('article');
   }
@@ -50,8 +50,9 @@ const App = () => {
   }, [state, link]);
   
 console.log(state);
+console.log(link);
   if(state === "HP"){
-console.log('hp');
+//console.log('hp');
     return (
       <ApolloProvider client={client}>
         <div className="App">
@@ -61,7 +62,7 @@ console.log('hp');
     );
   }
   if(state === "newArticle" && article !== null){
-    console.log('newArticle');
+    //console.log('newArticle');
     return (
       <ApolloProvider client={client}>
       <div className="App">
@@ -72,7 +73,7 @@ console.log('hp');
     );
   }
   if(state==="HPLogged"){
-    console.log('hpLogged')
+    //console.log('hpLogged')
     return(
     <ApolloProvider client={client}>
       <div className="App">
@@ -84,12 +85,11 @@ console.log('hp');
         <ListArticles request="getArticleByTopic" topic="6271078f64de2a3179c4356c" name="Environment" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="6271078364de2a3179c43567" name="Sport" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="6271077864de2a3179c43562" name="Society" changeState={selectArticle}></ListArticles>
-        <Profile id={"627229c35008bcac2b1981aa"}></Profile>
       </div>
       </ApolloProvider>)
   }
   if(state==="errorPostArticle"){
-    console.log('errorpostarticle')
+    //console.log('errorpostarticle')
     return (
       <div>
           <div class="alert alert-danger" role="alert">
@@ -100,22 +100,25 @@ console.log('hp');
   )
   }
   if(state === "article") {
-    console.log('article')
+    //console.log('article')
     return (
       <ApolloProvider client={client}>
       <div className="App">
       <NavBar changeState={setState}></NavBar>
-      <Article articleId={link}></Article>
+      <Article articleId={link} setState={setState} setLink={setLink}></Article>
       </div>
       </ApolloProvider>
     )
   }
   if(state === "profile"){
-    console.log('profile')
+    //console.log('profile')
     return (
-      <div>
-
+      <ApolloProvider client={client}>
+      <div className="App">
+      <NavBar changeState={setState}></NavBar>
+      <Profile id={link}></Profile>
       </div>
+      </ApolloProvider>
     )
   }
   else{

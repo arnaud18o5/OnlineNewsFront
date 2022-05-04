@@ -5,7 +5,7 @@ const RegisterForm = () => {
 
     const submit = async (event) => {
         event.preventDefault();
-        console.log("submit registration");
+        //console.log("submit registration");
         const query = `mutation RegisterUser($username: String!, $password: String!) {
             registerUser(username: $username, password: $password) {
               firstName
@@ -29,9 +29,9 @@ const RegisterForm = () => {
         });
         const user = await response.json();
         if(!user.errors) {
-            console.log(`user registered`);
+            //console.log(`user registered`);
         }
-        console.log(user);
+        //console.log(user);
     }
 
     return (

@@ -36,7 +36,7 @@ const PostArticle = (props) => {
             });
             const tpc = await response.json();
             setTopics(tpc.data.getAllTopics);
-            console.log(tpc);
+            //console.log(tpc);
         } catch (e) {
             setError(e);
         } finally {
@@ -46,24 +46,24 @@ const PostArticle = (props) => {
     
     useEffect(()=>{
         loadTopics();
-        console.log(pictureContent);
+        //console.log(pictureContent);
     }, []);
 
     useEffect(() => {
-        console.log("headpicture"+headPicture);
+        //console.log("headpicture"+headPicture);
     }, headPicture);
 
     useEffect(() => {
-        console.log(pictureContent);
+        //console.log(pictureContent);
         setPicCounter(picCounter+1);
     }, [JSON.stringify(pictureContent)]);
 
     const submit = async (event) => {
         try {
             event.preventDefault();
-        console.log(event.target.articleTitle.value);
-        console.log(text);
-        console.log(event.target.topics.value);
+        //console.log(event.target.articleTitle.value);
+        //console.log(text);
+        //console.log(event.target.topics.value);
         const query = `mutation Mutation($title: String!, $text: String!, $topics: [ID], $headPicture: String) {
             postArticle(title: $title, text: $text, topics: $topics, headPicture: $headPicture) {
               id
@@ -133,7 +133,7 @@ const PostArticle = (props) => {
         props.changeState("Article");
         props.article(article.data.postArticle._id);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             props.changeState("errorPostArticle");
         }
         event.preventDefault();
@@ -155,7 +155,7 @@ const PostArticle = (props) => {
                     <label for="topics">Choose a topic:</label>
                     <select name="topics" id="topics">
                         {topics.map((topic) => {
-                            console.log(topic);
+                            //console.log(topic);
                             return <option value={topic.id}>{topic.name}</option>
                         })}
                     </select>

@@ -9,6 +9,8 @@ const Profile = (props) => {
     const [error, setError] = useState(null);
     const [isMe, setIsMe] = useState(false);
     const [cookies, setCookies] = useCookies();
+    const [subscribers, setSubscribers] = useState(0);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     const loadProfile = async () => {
         try {
@@ -41,15 +43,65 @@ const Profile = (props) => {
                 variables: { userId: id },
                 })
               });
-              console.log(id);
+              //console.log(id);
               const p = await response.json();
+              if(p.errors){
+                  console.log(p.errors);
+                  setError(p.errors);
+              }
               setProfile(p.data.user);
-
+              setSubscribers(p.data.user.subscribers.length);
+              if(p.data.user.subscribers.find((sub) => {return sub.id === cookies.id})){
+                setIsSubscribed(true);
+              }
+              else{
+                  setIsSubscribed(false);
+              }
         } catch (error) {
             console.log('error');
             setError(error);
         } finally {
             setLoading(false);
+        }
+    }
+
+    const subscribe = async () => {
+        try{
+            const query = `mutation Mutation($userId: ID!) {
+                subscribeToUser(userID: $userId) {
+                  subscribers {
+                    id
+                    username
+                  }
+                }
+              }`;
+              const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies.token}`
+                    },
+                    body: JSON.stringify({
+                    query,
+                    variables: { userId: id },
+                    })
+                  });
+                const s = await response.json();
+                if(s.errors){
+                    setError(s.errors);
+                }
+                let p = profile;
+                p.subscribers = s.data.subscribeToUser.subscribers;
+                setProfile(p);
+                setSubscribers(p.subscribers.length);
+                if(s.data.subscribeToUser.subscribers.find((sub) => {return sub.id === cookies.id})){
+                    setIsSubscribed(true);
+                  }
+                  else{
+                    setIsSubscribed(false);
+                  }
+        }catch(error){
+            setError(error);
         }
     }
 
@@ -64,9 +116,15 @@ const Profile = (props) => {
         }
     }, []);
 
+    console.log(error);
     if(loading)
         return ('loading');
-    console.log(profile);
+
+    if(error){
+        console.log(error);
+        return 'error loading'
+    }
+    //console.log(profile);
     if(isMe){
         return(
         <UserInformations profile={profile}></UserInformations>
@@ -89,6 +147,17 @@ const Profile = (props) => {
                 </div>
                 <div class="container description">
                     Last Name : {profile.description}
+                </div>
+
+                <div class="container subscribers">
+                    Subscribers : {subscribers}
+                </div>
+                <div class="container subscribers">
+                    Subscribtion : {profile.subscribingTo.length}
+                </div>
+                <div class="container">
+                    {isSubscribed ? <button class="btn btn-danger" onClick={subscribe}>Unsubscribe to {profile.username}</button> : <button class="btn btn-primary" onClick={subscribe}>Subscribe to {profile.username}</button>}
+                    
                 </div>
             </div>
         )
