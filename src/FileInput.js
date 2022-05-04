@@ -29,8 +29,10 @@ const FileInput = (props) => {
             }
             if(props.type === "avatar"){
                 updateInfo(data.singleUpload.url);
+                props.change({name:"avatar", value: data.singleUpload.url})
             }
             setIsLoaded(true);
+            console.log(data);
         }
     })
 

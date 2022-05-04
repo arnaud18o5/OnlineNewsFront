@@ -8,6 +8,7 @@ import ListArticles from './ListArticles';
 import FileInput from './FileInput.js';
 import Article from './Article.js';
 import NavBar from './NavBar.js';
+import Profile from './Profile.js';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 import {useState, useEffect} from 'react';
@@ -83,6 +84,7 @@ console.log('hp');
         <ListArticles request="getArticleByTopic" topic="6271078f64de2a3179c4356c" name="Environment" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="6271078364de2a3179c43567" name="Sport" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="6271077864de2a3179c43562" name="Society" changeState={selectArticle}></ListArticles>
+        <Profile id={"627229c35008bcac2b1981aa"}></Profile>
       </div>
       </ApolloProvider>)
   }

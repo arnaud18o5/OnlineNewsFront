@@ -1,10 +1,13 @@
 import {useCookies} from 'react-cookie';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import FileInput from './FileInput.js';
 
 const UserInfo = (props) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [info, setInfo] = useState({name:props.name, value:props.value});
+    const [loading, setLoading] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies();
+    const [error, setError] = useState(null);
 
     const edit = () => {
         setIsEditing(!isEditing);
@@ -12,45 +15,56 @@ const UserInfo = (props) => {
 
     const updateInfo = async (event) => {
         event.preventDefault();
-        console.log('{ "' + props.type + '" : "' + event.target[0].value + '"}')
-        console.log(JSON.parse('{ "' + props.type + '" : "' + event.target[0].value + '"}'));
-        const query = `mutation Mutation($${props.type}: String) {
-            addUserInfo(${props.type}: $${props.type}) {
-                ${props.type}
-            }
-          }`;
-          const res = await fetch('https://onlinenews.azurewebsites.net/graphql', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + cookies.token,
-            },
-            body: JSON.stringify({
-            query,
-            variables: JSON.parse('{ "' + props.type + '" : "' + event.target[0].value + '"}'),
-            })
-        });
-        console.log(res);
-        const response = await res.json();
-        console.log(response);
-        if(!response.errors) {
-            console.log(response.data.addUserInfo[props.type]);
+        setLoading(true);
+        try {
+            const query = `mutation Mutation($${props.type}: String) {
+                addUserInfo(${props.type}: $${props.type}) {
+                    ${props.type}
+                }
+              }`;
+              const res = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + cookies.token,
+                },
+                body: JSON.stringify({
+                query,
+                variables: JSON.parse('{ "' + props.type + '" : "' + event.target[0].value + '"}'),
+                })
+            });
+            const response = await res.json();
+            console.log(response);
             setCookies(props.type, response.data.addUserInfo[props.type]);
+            setInfo({name: props.type, value: response.data.addUserInfo[props.type]})
+            //let p = profile;
+            //p[props.type] = response.data.addUserInfo[props.type];
+            console.log(props.type);
+            //setProfile(p);
+        } catch (error) {
+            console.log("error");
+            setError(error);
         }
-        else{
-            console.log("add notification error");
+        finally {
+            setIsEditing(false);
+            setLoading(false);
         }
-        setIsEditing(false);
+        
     }
+
+
+    useEffect(() => {
+        setInfo({name: props.name, value: props.value});
+    }, [])
 
     if(props.editing){
         
         if(isEditing){
             return (
                 <div class="user-info">
-                    <p>{props.name} : {props.value}</p>
+                    <p>{info.name} : {info.value}</p>
                     <form onSubmit={updateInfo}>
-                        <input type="text" id={props.type} placeholder={"New "+props.name}></input>
+                        <input type="text" id={props.type} placeholder={"New "+info.name}></input>
                         <input type="submit" value="Update"></input>
                     </form>
                 </div>
@@ -60,12 +74,12 @@ const UserInfo = (props) => {
             return (props.name === 'Avatar' ? 
                 <div class="user-info">
                     <p>Avatar : </p>
-                    <img src={cookies.avatar} width="100" height="100"/>
-                    <FileInput></FileInput>
+                    <img src={"https://onlinenews.azurewebsites.net/images/"+info.value} width="100" height="100"/>
+                    <FileInput type="avatar" change={setInfo}></FileInput>
                 </div>
             : 
                 <div class="user-info">
-                    <p>{props.name} : {props.value}</p>
+                    <p>{info.name} : {info.value}</p>
                     <button onClick={edit}>Edit</button>
                 </div>
             )
@@ -74,7 +88,7 @@ const UserInfo = (props) => {
     else{
         return (
             <div class="user-info">
-                <p>{props.name} : {props.value}</p>
+                <p>{info.name} : {info.value}</p>
             </div>
         )
     }
