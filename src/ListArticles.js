@@ -179,7 +179,7 @@ const LastArticles = (props) => {
       </div>
     </div>
     : 
-    <div id='listArticles'>
+    <div id={props.name}>
         <h3 style={{padding: "10px 0 10px 20px"}}>{props.name}:</h3>
         <ul class="list-inline media-scroller snaps-inline z-card">
             {articles.data[props.request].map((a)=>{

@@ -25,19 +25,16 @@ const NavBar = (props) => {
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">News</a>
+                        <a class="nav-link" href="#Economy">Economy</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Economy</a>
+                        <a class="nav-link" href="#Politic">Politic</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Politic</a>
+                        <a class="nav-link" href="#Environment">Environment</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link">Environment</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link">Sport</a>
+                        <a class="nav-link" href="#Sport">Sport</a>
                         </li>
                     </ul>
                     </div>

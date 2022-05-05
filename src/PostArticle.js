@@ -129,7 +129,7 @@ const PostArticle = (props) => {
         });
         const article = await response.json();
         console.log(article.data.postArticle.id);
-        //props.changeState(article.data.postArticle.id);
+        props.changeState(article.data.postArticle.id);
         } catch (error) {
             console.log(error);
             props.changeState("errorPostArticle");
