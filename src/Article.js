@@ -216,10 +216,16 @@ const Article = (props) => {
           </div>
           {isMine ? <button class="btn btn-danger btn-sm" onClick={removeArticle}>Delete this article</button> : <></>}
           <img src={"https://onlinenews.azurewebsites.net/images/"+article.headPicture} style={{margin: "auto"}}></img>
-          <MDEditor.Markdown 
-            source={article.text} 
-            style={{margin: "5% 0 0 0"}}
-          />
+          <div style={{margin:"auto%"}}>
+            <div class="position-relative">
+            <MDEditor.Markdown 
+              source={article.text} 
+              class="position-absolute top-50 start-50 translate-middle"
+            />
+            </div>
+            
+          </div>
+         
         </div>
         <div class="Article"id="likeButtons">
             <button class="btn btn-success" onClick={() => likeArticle(true)}><FontAwesomeIcon icon={faThumbsUp} /></button>
@@ -231,8 +237,8 @@ const Article = (props) => {
         </div>
         <Comments comments={article.comments} articleId={props.articleId} setState={props.setState} setLink={props.setLink}></Comments>
         <div class="author-div Article ">
-          <div class="d-inline-flex justify-content-evenly">
-            <img src={"https://onlinenews.azurewebsites.net/images/"+article.author.avatar} style={{width: "10%"}}></img>
+          <div class="m-center d-flex justify-content-evenly align-items-center">
+            <img src={"https://onlinenews.azurewebsites.net/images/"+article.author.avatar} style={{width: "20%"}}></img>
             <div>
               <button onClick={() => {props.setState("profile"); props.setLink(article.author.id)}} class="btn btn-link btn-lg">{article.author.username}</button>
               <p>{article.author.firstName} {article.author.lastName}</p>

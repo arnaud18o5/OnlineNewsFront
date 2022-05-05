@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Cookies, useCookies} from 'react-cookie';
 import UserInformations from './UserInformations.js';
+import ListArticles from './ListArticles.js';
 
 const Profile = (props) => {
     const [profile, setProfile] = useState(null);
@@ -11,7 +12,6 @@ const Profile = (props) => {
     const [cookies, setCookies] = useCookies();
     const [subscribers, setSubscribers] = useState(0);
     const [isSubscribed, setIsSubscribed] = useState(false);
-
     const loadProfile = async () => {
         try {
             const query = `query Query($userId: ID!) {
@@ -65,6 +65,8 @@ const Profile = (props) => {
             setLoading(false);
         }
     }
+
+    
 
     const subscribe = async () => {
         try{
@@ -128,7 +130,10 @@ const Profile = (props) => {
     //console.log(profile);
     if(isMe){
         return(
-        <UserInformations profile={profile}></UserInformations>
+            <div>
+                <UserInformations profile={profile}></UserInformations>
+                <ListArticles changeState={props.setState} request="getAllArticlesOf" name="Your articles" id={id}></ListArticles>
+            </div>
         )
     }
     else {
@@ -160,6 +165,7 @@ const Profile = (props) => {
                     {isSubscribed ? <button class="btn btn-danger" onClick={subscribe}>Unsubscribe to {profile.username}</button> : <button class="btn btn-primary" onClick={subscribe}>Subscribe to {profile.username}</button>}
                     
                 </div>
+                <ListArticles changeState={props.setState} request="getAllArticlesOf"  name={"Articles of "+profile.username} id={id}></ListArticles>
             </div>
         )
     }

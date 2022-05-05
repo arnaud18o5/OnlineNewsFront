@@ -12,6 +12,40 @@ const LastArticles = (props) => {
         try{
           if(!props.topic)
           {
+            if(props.request === 'getAllArticlesOf'){
+              const query = `query Query($getAllArticlesOfId: ID!) {
+                getAllArticlesOf(id: $getAllArticlesOfId) {
+                  id
+                  author {
+                    username
+                  }
+                  headPicture
+                  title
+                  date
+                  likeCounter
+                  dislikeCounter
+                  topics {
+                    id
+                    name
+                  }
+                }
+              }`;
+            const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                query,
+                variables: { getAllArticlesOfId: props.id },
+                })
+              });
+            const articles = await response.json();
+              if(!articles.errors){
+                  setArticles(articles)
+              }
+            }
+            else{
             const query = `query Query {
                 ${props.request} {
                   id
@@ -83,6 +117,7 @@ const LastArticles = (props) => {
             });
             const articles = await response.json();
             setArticles(articles);
+          }
           }
           else{
             const query = `query Query($topicId: ID!) {

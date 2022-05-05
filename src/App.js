@@ -88,7 +88,7 @@ console.log(link);
       <div className="App">
         <NavBar changeState={setState} changeLink={setLink}></NavBar>
         <News></News>
-        <ListArticles request="getSubscriptionsArticle" name="Sub Articles" changeState={selectArticle}></ListArticles>
+        <ListArticles request="getSubscriptionsArticle" name="Articles of the users you follow" changeState={selectArticle}></ListArticles>
         <ListArticles request="getBestArticles" name="Best Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getLastArticles" name="Latest Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy" changeState={selectArticle}></ListArticles>
@@ -127,7 +127,7 @@ console.log(link);
       <ApolloProvider client={client}>
       <div className="App">
       <NavBar changeState={setState} changeLink={setLink}></NavBar>
-      <Profile id={link}></Profile>
+      <Profile id={link} setState={selectArticle} ></Profile>
       </div>
       </ApolloProvider>
     )

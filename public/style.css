@@ -53,4 +53,10 @@ body {
 
   .author-div{
     background-color: aqua;
+    margin: auto;
+  }
+  
+  .m-center{
+    width:50%;
+    margin:auto;
   }

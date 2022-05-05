@@ -9,7 +9,10 @@ const News = (props) => {
         try {
             const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=e0d997436f7048ba92be5cfc2c4f0fc4`;
             const res = await fetch(url, {
-                method:'GET'
+                method:'GET',
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
             const response = await res.json();
             setNews(response.articles.splice(0,5));
