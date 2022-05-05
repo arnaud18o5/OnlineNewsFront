@@ -99,7 +99,6 @@ console.log(link);
       </ApolloProvider>)
   }
   if(state==="errorPostArticle"){
-    //console.log('errorpostarticle')
     return (
       <div>
           <div class="alert alert-danger" role="alert">
