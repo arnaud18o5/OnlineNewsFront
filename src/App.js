@@ -87,7 +87,6 @@ console.log(link);
     <ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState} changeLink={setLink}></NavBar>
-        <News></News>
         <ListArticles request="getSubscriptionsArticle" name="Sub Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getBestArticles" name="Best Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getLastArticles" name="Latest Articles" changeState={selectArticle}></ListArticles>
