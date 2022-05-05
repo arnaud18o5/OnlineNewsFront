@@ -56,7 +56,7 @@ console.log(link);
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <NavBar changeState={setState}></NavBar>
+          <NavBar changeState={setState} changeLink={setLink}></NavBar>
         </div>
       </ApolloProvider>
     );
@@ -66,7 +66,7 @@ console.log(link);
     return (
       <ApolloProvider client={client}>
       <div className="App">
-        <NavBar changeState={setState}></NavBar>
+        <NavBar changeState={setState} changeLink={setLink}></NavBar>
         <PostArticle changeState={setState} article={setArticle}></PostArticle>
       </div>
       </ApolloProvider>
@@ -77,7 +77,7 @@ console.log(link);
     return(
     <ApolloProvider client={client}>
       <div className="App">
-        <NavBar changeState={setState}></NavBar>
+        <NavBar changeState={setState} changeLink={setLink}></NavBar>
         <ListArticles request="getBestArticles" name="Best Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getLastArticles" name="Latest Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy" changeState={selectArticle}></ListArticles>
@@ -104,7 +104,7 @@ console.log(link);
     return (
       <ApolloProvider client={client}>
       <div className="App">
-      <NavBar changeState={setState}></NavBar>
+      <NavBar changeState={setState} changeLink={setLink}></NavBar>
       <Article articleId={link} setState={setState} setLink={setLink}></Article>
       </div>
       </ApolloProvider>
@@ -115,7 +115,7 @@ console.log(link);
     return (
       <ApolloProvider client={client}>
       <div className="App">
-      <NavBar changeState={setState}></NavBar>
+      <NavBar changeState={setState} changeLink={setLink}></NavBar>
       <Profile id={link}></Profile>
       </div>
       </ApolloProvider>

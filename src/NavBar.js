@@ -50,7 +50,7 @@ const NavBar = (props) => {
                                 <button class="mx-3 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{cookies.username}</button>
                                     <div class="dropdown-menu z-drop" aria-labelledby="user">
                                         <div class="d-flex p-2 bd-highlight w-100 px-0">
-                                            <button class="w-100 btn btn-link">Your profile</button>
+                                            <button class="w-100 btn btn-link" onClick={() => {props.changeState("profile"); props.changeLink(cookies.id)}}>Your profile</button>
                                         </div>
                                         <div class="d-flex p-2 bd-highlight w-100 px-0">
                                             <button class="w-100 btn btn-link">Your articles</button>

@@ -190,9 +190,15 @@ const Article = (props) => {
             </div>
         </div>
         <Comments comments={article.comments} articleId={props.articleId} setState={props.setState} setLink={props.setLink}></Comments>
-        <div class="author-div Article">
-          <img src={article.author.avatar}></img>
-          <p>{article.author.username}</p>
+        <div class="author-div Article ">
+          <div class="d-inline-flex justify-content-evenly">
+            <img src={"https://onlinenews.azurewebsites.net/images/"+article.author.avatar} style={{width: "10%"}}></img>
+            <div>
+              <button onClick={() => {props.setState("profile"); props.setLink(article.author.id)}} class="btn btn-link btn-lg">{article.author.username}</button>
+              <p>{article.author.firstName} {article.author.lastName}</p>
+            </div>
+            <p>{article.author.description}</p>
+          </div>
         </div>
       </div>
     )

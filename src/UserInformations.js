@@ -28,6 +28,12 @@ const UserInformations = (props) => {
                 <li>
                     <UserInfo name="Description" type="description" value={profile.description} editing={true}></UserInfo>
                 </li>
+                <li>
+                    Subscribers: {profile.subscribers.length}
+                </li>
+                <li>
+                    subscription: {profile.subscribingTo.length}
+                </li>
             </ul>
         </div>
     )

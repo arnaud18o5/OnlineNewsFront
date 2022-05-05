@@ -49,6 +49,7 @@ const Profile = (props) => {
                   console.log(p.errors);
                   setError(p.errors);
               }
+              console.log(p);
               setProfile(p.data.user);
               setSubscribers(p.data.user.subscribers.length);
               if(p.data.user.subscribers.find((sub) => {return sub.id === cookies.id})){
@@ -153,7 +154,7 @@ const Profile = (props) => {
                     Subscribers : {subscribers}
                 </div>
                 <div class="container subscribers">
-                    Subscribtion : {profile.subscribingTo.length}
+                    subscription : {profile.subscribingTo.length}
                 </div>
                 <div class="container">
                     {isSubscribed ? <button class="btn btn-danger" onClick={subscribe}>Unsubscribe to {profile.username}</button> : <button class="btn btn-primary" onClick={subscribe}>Subscribe to {profile.username}</button>}
