@@ -9,6 +9,7 @@ import FileInput from './FileInput.js';
 import Article from './Article.js';
 import NavBar from './NavBar.js';
 import Profile from './Profile.js';
+import News from './News.js';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 import {useState, useEffect} from 'react';
@@ -42,6 +43,14 @@ const App = () => {
         setState("HP");
       }
     } 
+    if(state === "HPLogged"){
+      if(cookies.token){
+        setState("HPLogged");
+      }
+      else{
+        setState("HP");
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -78,6 +87,8 @@ console.log(link);
     <ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState} changeLink={setLink}></NavBar>
+        <News></News>
+        <ListArticles request="getSubscriptionsArticle" name="Sub Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getBestArticles" name="Best Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getLastArticles" name="Latest Articles" changeState={selectArticle}></ListArticles>
         <ListArticles request="getArticleByTopic" topic="627107a964de2a3179c43574" name="Economy" changeState={selectArticle}></ListArticles>

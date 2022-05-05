@@ -11,6 +11,7 @@ const Article = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookies] = useCookies();
   const [likeCount, setLikeCount] = useState({like:0, dislike:0});
+  const [isMine, setIsMine] = useState(false);
 
   const likeArticle = async (like) => {
     try {
@@ -134,11 +135,47 @@ const Article = (props) => {
       //console.log(Article)
       setArticle(Article.data.getArticleById);
       setLikeCount({like:Article.data.getArticleById.likeCounter, dislike: Article.data.getArticleById.dislikeCounter});
+      console.log(article);
+      if(Article.data.getArticleById.author.id===cookies.id)
+        setIsMine(true);
+      else
+        setIsMine(false);
     } catch(error){
-      //console.log(error);
+      console.log(error);
       setError(error);
     }
     finally {
+      setIsLoading(false);
+    }
+  }
+
+  const removeArticle = async () => {
+    setIsLoading(true);
+    try {
+      const query = `mutation Mutation($articleId: ID!) {
+        removeArticle(articleID: $articleId) {
+          message
+        }
+      }`;
+      const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookies.token}`
+        },
+        body: JSON.stringify({
+        query,
+        variables: { articleId: props.articleId },
+        })
+      });
+      const message = await response.json();
+      if(!message.errors){
+        props.setState("HPLogged");
+      }
+      console.log(message);
+    } catch (error) {
+      setError(error);
+    } finally {
       setIsLoading(false);
     }
   }
@@ -167,14 +204,17 @@ const Article = (props) => {
     return (
       <div id="back-Article">
         <div class="Article">
-          <h1>{article.title}</h1>
-          <h4>{article.date}</h4>
-          <ul>
-            {article.topics.map((topic) => {
-              //console.log(topic.name);
-              return <li key={topic.name}>{topic.name}</li>
-            })}
-          </ul>
+          <div>
+            <h1>{article.title}</h1>
+            <h4>{article.date}</h4>
+            <ul>
+              {article.topics.map((topic) => {
+                //console.log(topic.name);
+                return <li key={topic.name}>{topic.name}</li>
+              })}
+            </ul>
+          </div>
+          {isMine ? <button class="btn btn-danger btn-sm" onClick={removeArticle}>Delete this article</button> : <></>}
           <img src={"https://onlinenews.azurewebsites.net/images/"+article.headPicture} style={{margin: "auto"}}></img>
           <MDEditor.Markdown 
             source={article.text} 

@@ -1,17 +1,19 @@
 import {useState, useEffect} from 'react';
+import {useCookies} from 'react-cookie';
 
 
 const LastArticles = (props) => {
     const [articles, setArticles] = useState(null);
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true);
+    const [cookies] = useCookies();
 
     const f = async () => {
         try{
           if(!props.topic)
           {
-            const query = `query Query($number: Int) {
-                ${props.request}(number: $number) {
+            const query = `query Query {
+                ${props.request} {
                   id
                   author {
                     id
@@ -72,11 +74,11 @@ const LastArticles = (props) => {
             const response = await fetch('https://onlinenews.azurewebsites.net/graphql', {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${cookies.token}`
                 },
                 body: JSON.stringify({
                 query,
-                variables: { number: 10 },
                 })
             });
             const articles = await response.json();

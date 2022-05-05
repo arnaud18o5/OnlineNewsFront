@@ -16,7 +16,7 @@ const NavBar = (props) => {
     }
     if(cookies.token){
         return(
-            <nav class="navbar navbar-expand-lg navbar-light bg-light z-devant">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light z-devant shadow p-3 rounded">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#" onClick={() => {props.changeState("HPLogged")}}>Online News</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
