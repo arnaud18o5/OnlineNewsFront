@@ -128,12 +128,10 @@ const PostArticle = (props) => {
             })
         });
         const article = await response.json();
-        event.target.articleTitle.value = "";
-        event.target.articleText.value = "";
-        props.changeState("Article");
-        props.article(article.data.postArticle._id);
+        console.log(article.data.postArticle.id);
+        props.changeState(article.data.postArticle.id);
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             props.changeState("errorPostArticle");
         }
         event.preventDefault();

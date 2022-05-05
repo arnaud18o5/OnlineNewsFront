@@ -67,7 +67,7 @@ console.log(link);
       <ApolloProvider client={client}>
       <div className="App">
         <NavBar changeState={setState} changeLink={setLink}></NavBar>
-        <PostArticle changeState={setState} article={setArticle}></PostArticle>
+        <PostArticle changeState={selectArticle}></PostArticle>
       </div>
       </ApolloProvider>
     );
@@ -123,7 +123,12 @@ console.log(link);
   }
   else{
     return (
+      <ApolloProvider client={client}>
+      <div className="App">
+      <NavBar changeState={setState} changeLink={setLink}></NavBar>
       <p>error</p>
+      </div>
+      </ApolloProvider>
     )
   }
 }
