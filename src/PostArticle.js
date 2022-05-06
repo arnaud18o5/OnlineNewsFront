@@ -163,7 +163,8 @@ const PostArticle = (props) => {
                         <FileInput type="headPicture" setP={setHeadPicture}></FileInput>
                     </div>
                     <div class="d-flex justify-content-center padding">
-                        <HeadPicture key="headPicture" hp={headPicture}></HeadPicture>
+                        {headPicture ? <HeadPicture key="headPicture" hp={headPicture}></HeadPicture> : <></>}
+                        
                     </div>
                         <div class="d-flex justify-content-center padding">
                         Add pictures for your article :
