@@ -50,12 +50,6 @@ const NavBar = (props) => {
                                             <button class="w-100 btn btn-link" onClick={() => {props.changeState("profile"); props.changeLink(cookies.id)}}>Your profile</button>
                                         </div>
                                         <div class="d-flex p-2 bd-highlight w-100 px-0">
-                                            <button class="w-100 btn btn-link">Your articles</button>
-                                        </div>
-                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
-                                            <button class="w-100 btn btn-link">Your subscriptions</button>
-                                        </div>
-                                        <div class="d-flex p-2 bd-highlight w-100 px-0">
                                             <button onClick={signOut} class="w-100 btn btn-light">Sign-out</button>
                                         </div>
                                     </div>
